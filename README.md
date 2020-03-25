@@ -39,21 +39,21 @@ If you still face any issues while installing dependencies for the project, feel
 
 ## 1. For Dual Learning 
 
-      For performing MT using deep reinforcement learning, we have trained the following models :
-      1.	Language model for English
-      2.	Language model for Sanskrit
-      3.	Sanskrit - English NMT Model
-      4.	English - Sanskrit NMT Model
+For performing MT using deep reinforcement learning, we have trained the following models :
+1.	Language model for English
+2.	Language model for Sanskrit
+3.	Sanskrit - English NMT Model
+4.	English - Sanskrit NMT Model
 
-      ###### Translation Results
-      Translation results are available in translation_results folder for all input data. Please use the below command to translate new       Sanskrit phrase to English phrase. We are assuming you have a text file placed in data folder as data_test.txt.
-      ```
-      cd nmt
-      ./scripts/test.sh *src* *tgt* *mdl* *txt*
-      ```
-      Here specify the Source File location, Target file location, Pretrained Model location and the Output/ Prediction File Location.
+###### Translation Results
+Translation results are available in translation_results folder for all input data. Please use the below command to translate new       Sanskrit phrase to English phrase. We are assuming you have a text file placed in data folder as data_test.txt.
+```
+cd nmt
+./scripts/test.sh *src* *tgt* *mdl* *txt*
+```
+Here specify the Source File location, Target file location, Pretrained Model location and the Output/ Prediction File Location.
 
-      To compute the BLEU Score, use : 
-      ```
-      perl multi-bleu.perl data/test.de-en.en < out/decode.txt
-      ```
+To compute the BLEU Score, use : 
+```
+perl multi-bleu.perl data/test.de-en.en < out/decode.txt
+```
