@@ -45,10 +45,11 @@ For performing MT using deep reinforcement learning, we have trained the followi
 3.	Sanskrit - English NMT Model
 4.	English - Sanskrit NMT Model
 
-######Translation Results
+###### Translation Results
 Translation results are available in translation_results folder for all input data. Please use the below command to translate new Sumerian phrase to English phrase. We are assuming you have a text file placed in data folder as data_test.txt.
 ```
-./nmt/scripts/test.sh *src* *tgt* *mdl* *txt*
+cd nmt
+./scripts/test.sh *src* *tgt* *mdl* *txt*
 ```
 Here specify the Source File location, Target file location, Pretrained Model location and the Output/ Prediction File Location.
 
