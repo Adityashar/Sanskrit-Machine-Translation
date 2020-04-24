@@ -59,7 +59,7 @@ We used the Sa-en corpus consisting of 6K parallel lines. The data was tokenized
 ```
 python data/build_dictionary.py `sanskrit_training` `english_training`
 
-python nematus/train.py --source_dataset `training_sanskrit` --target_dataset `training_english` --dictionaries `sanskrit_training.json` `english_training.json` --save_freq 3000 --model model.sa-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 64 --token_batch_size 4096 --valid_source_dataset `validation_sanskrit` --valid_target_dataset `validation_english` --valid_batch_size 64 --valid_token_batch_size 4096
+python nematus/train.py --source_dataset `training_sanskrit` --target_dataset `training_english` --dictionaries `sanskrit_training.json` `english_training.json` --save_freq 3000 --model model.sa-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 64 --token_batch_size 4096 --valid_source_dataset `validation_sanskrit` --valid_target_dataset `validation_english` --valid_batch_size 64 --valid_token_batch_size 4096 --reload model.hi-en-60000
 
 ```
 
