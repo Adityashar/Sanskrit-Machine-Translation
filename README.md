@@ -47,11 +47,25 @@ Here we perform Machine Translation on a Low-Resource Language, Sanskrit. For th
 ### Training :
 
 #### 1. For English-Hindi NMT Model -
-We used the IIT Bombay English-Hindi Corpus consisting of 1.56M parallel lines. The data was tokenized using the IndicNLP tokenizer for hindi and Moses tokenizer for English. The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. Following command was used for training purpose : 
+We used the IIT Bombay English-Hindi Corpus consisting of 1.56M parallel lines. The data was tokenized using the IndicNLP tokenizer for hindi and Moses tokenizer for English. 
 ```
-python data/build_dictionary.py `hindi_training` `english_training`
+Hindi :
+python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/hi.txt ./data/en-hi.hi.all hi
 
-python nematus/train.py --source_dataset `training_hindi` --target_dataset `training_english` --dictionaries `hindi_training.json` `english_training.json` --save_freq 30000 --model model.hi-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 64 --token_batch_size 4096 --valid_source_dataset `validation_hindi` --valid_target_dataset `validation_english` --valid_batch_size 64 --valid_token_batch_size 4096
+English :
+./data/tokenizer.perl -l en < ./data/en.txt > ./data/en-hi.en.all
+```
+The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
+```
+subword-nmt learn-bpe -s {num_operations} < {train_file} > {codes_file}
+subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
+```
+
+Following command was used for training purpose : 
+```
+python data/build_dictionary.py data/train.hi-en.hi data/train.hi-en.en
+
+python nematus/train.py --source_dataset data/train.hi-en.hi --target_dataset data/train.hi-en.en --dictionaries data/train.hi-en.hi.json data/train.hi-en.en.json --save_freq 30000 --model model.hi-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 64 --token_batch_size 4096 --valid_source_dataset `validation_hindi` --valid_target_dataset `validation_english` --valid_batch_size 64 --valid_token_batch_size 4096
 
 ```
 #### 2. For Sanskrit-English NMT Model - 
