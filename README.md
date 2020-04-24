@@ -57,7 +57,12 @@ English :
 ```
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
 ```
-subword-nmt learn-bpe -s {num_operations} < {train_file} > {codes_file}
+Hindi :
+subword-nmt learn-bpe -s 16000 < {train_file} > {codes_file}
+subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
+
+English :
+subword-nmt learn-bpe -s 16000 < {train_file} > {codes_file}
 subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
 ```
 
@@ -72,15 +77,25 @@ python nematus/train.py --source_dataset data/train.hi-en.hi --target_dataset da
 We used the Sa-en corpus consisting of 6K parallel lines. The data was tokenized using the IndicNLP tokenizer for Sanskrit and Moses tokenizer for English.
 ```
 Sanskrit :
-python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/Sanskrit-English/englishdatasupervised.txt ./data/en-sa.sa.all sa
+python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/Sanskrit-English/englishdatasupervised.txt ./data/Sanskrit-English/en-sa.sa.all sa
 
 English :
-./data/tokenizer.perl -l en < ./data/Sanskrit-English/englishdatasupervised.txt > ./data/en-sa.en.all
+./data/tokenizer.perl -l en < ./data/Sanskrit-English/englishdatasupervised.txt > ./data/Sanskrit-English/en-sa.en.all
 ```
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
 ```
-subword-nmt learn-bpe -s {num_operations} < {train_file} > {codes_file}
+Sanskrit :
+subword-nmt learn-bpe -s 4000 < {train_file} > {codes_file}
 subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
+
+English :
+subword-nmt learn-bpe -s 2000 < {train_file} > {codes_file}
+subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
+
+Use the following files to split data into train, test and valid :
+
+python data/Sanskrit-English/docen.py
+python data/Sanskrit-English/docsn.py
 ```
 Following command was used for training purpose :
 ```
