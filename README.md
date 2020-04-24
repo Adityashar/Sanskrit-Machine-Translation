@@ -59,12 +59,13 @@ We used the Sa-en corpus consisting of 6K parallel lines. The data was tokenized
 ```
 Sanskrit :
 python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/Sanskrit-English/englishdatasupervised.txt ./data/en-sa.sa.all sa
+
 English :
 ./data/tokenizer.perl -l en < ./data/Sanskrit-English/englishdatasupervised.txt > ./data/en-sa.en.all
 ```
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. Following command was used for training purpose :
 ```
-CUDA_VISIBLE_DEVICES=0 python nematus/train.py --source_dataset data/en-sa.sa.train \ --target_dataset data/en-sa.en.train --dictionaries data/hindi/train.hi-en.hi.json data/hindi/train.hi-en.en.json --save_freq 20000 \ --model model.sa-enge --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings \ --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 \ --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 200 --batch_size 32 --token_batch_size 2048 --valid_source_dataset \ data/en-sa.sa.valid --valid_target_dataset data/en-sa.en.valid --valid_freq 5000 --valid_batch_size 32 --valid_token_batch_size 2048 \ --reload ./Pretrained_Model/model.hi-eng-80000
+CUDA_VISIBLE_DEVICES=0 python nematus/train.py --source_dataset data/en-sa.sa.train --target_dataset data/en-sa.en.train --dictionaries data/hindi/train.hi-en.hi.json data/hindi/train.hi-en.en.json --save_freq 20000 --model model.sa-enge --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 200 --batch_size 32 --token_batch_size 2048 --valid_source_dataset data/en-sa.sa.valid --valid_target_dataset data/en-sa.en.valid --valid_freq 5000 --valid_batch_size 32 --valid_token_batch_size 2048 --reload ./Pretrained_Model/model.hi-eng-80000
 ```
 
 ###### Translation Results
@@ -78,9 +79,11 @@ Here specify the Source File location, Target file location, Pretrained Model lo
 To compute the BLEU Score, use : 
 ```
 Decoding BPE for Test file and Translated File : 
+
 cat data/en-sa.en.test | sed -E 's/(@@ )|(@@ ?$)//g' > en-sa.en.test.bpe
 cat data/en-out | sed -E 's/(@@ )|(@@ ?$)//g' > data/sa-en.out
 
 Calculating BLEU : 
+
 perl data/multi-bleu.perl data/en-sa.en.test.bpe < data/sa-en.out
 ```
