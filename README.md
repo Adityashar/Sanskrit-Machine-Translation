@@ -91,7 +91,7 @@ python data/Sanskrit-English/docen.py
 python data/Sanskrit-English/docsn.py
 ```
 
-###Training : 
+### Training : 
 
 1. For the Hi-En NMT : 
 
@@ -100,6 +100,7 @@ Firstly concatenated Sn-En and Hi-En parallel data were used to generate diction
 ```
 *concatenate train.hi-en.hi and en-sa.sa.all*
 *concatenate train.hi-en.en and en-sa.en.all*
+
 python data/build_dictionary.py data/train.hi-en.hi data/train.hi-en.en
 ```
 
