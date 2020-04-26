@@ -23,19 +23,19 @@ conda activate env
 ```
 All dependencies can be installed via:
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 NOTE: If you have MemoryError in the install try to use:
 ```
-pip install -r requirements.txt --no-cache-dir
+pip3 install -r requirements.txt --no-cache-dir
 ```
-Note that Project currently support Tensorflow >= 1.15. We tested it on Tensorflow 1.15.0
-By this point, your system should be ready with all dependencies. Please use below command to check PyTorch verion.
+Note that Project currently support Tensorflow = 1.15. We tested it on Tensorflow 1.15.0
+By this point, your system should be ready with all dependencies. Please use below command to check Tensorflow verion.
 ```
 python -c "import tensorflow; print(tensorflow.__version__)"
 ```
-Output should be your PyTorch version >= 1.15.0
-If you still face any issues while installing dependencies for the project, feel free to ping us at our Communication channel.
+Output should be your Tensorflow version = 1.15.0
+If you still face any issues while installing dependencies for the project, feel free to raise issue.
 
 ### Process :
 
