@@ -53,17 +53,17 @@ Hindi :
 python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/hi.txt ./data/en-hi.hi.all hi
 
 English :
-./data/tokenizer.perl -l en < ./data/en.txt > ./data/en-hi.en.all
+perl ./data/tokenizer.perl -l en < ./data/en.txt > ./data/en-hi.en.all
 ```
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
 ```
 Hindi :
-subword-nmt learn-bpe -s 16000 < {train_file} > {codes_file}
-subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
+subword-nmt learn-bpe -s 16000 < ./data/en-hi.hi.all > ./data/hindi_codes
+subword-nmt apply-bpe -c ./data/hindi_codes < ./data/en-hi.hi.all > ./data/train.hi-en.hi
 
 English :
-subword-nmt learn-bpe -s 16000 < {train_file} > {codes_file}
-subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
+subword-nmt learn-bpe -s 16000 < ./data/en-hi.en.all > ./data/eng_codes
+subword-nmt apply-bpe -c ./data/eng_codes < ./data/en-hi.en.all > ./data/train.hi-en.en
 ```
 
 #### 2. For Sanskrit-English NMT Model - 
