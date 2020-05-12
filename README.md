@@ -98,22 +98,24 @@ python data/Sanskrit-English/docsn.py
 Firstly concatenated Sn-En and Hi-En parallel data were used to generate dictionary file required in nematus NMT.
 
 ```
-*concatenate train.hi-en.hi and en-sa.sa.all*
-*concatenate train.hi-en.en and en-sa.en.all*
+cat ./data/train.hi-en.hi ./data/Sanskrit-English/en-sa.sa.bped > ./data/train_hindi
+cat ./data/train.hi-en.en ./data/Sanskrit-English/en-sa.en.bped > ./data/train_english 
 
-python data/build_dictionary.py data/train.hi-en.hi data/train.hi-en.en
+python data/build_dictionary.py ./data/train_hindi ./data/train_english
 ```
 
 Following command was used for training purpose : 
 ```
-python nematus/train.py --source_dataset data/train.hi-en.hi --target_dataset data/train.hi-en.en --dictionaries data/train.hi-en.hi.json data/train.hi-en.en.json --save_freq 30000 --model model.hi-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 64 --token_batch_size 4096 --valid_source_dataset `validation_hindi` --valid_target_dataset `validation_english` --valid_batch_size 64 --valid_token_batch_size 4096
+python nematus/train.py --source_dataset data/train_hindi --target_dataset data/train_english --dictionaries data/train_hindi.json data/train_english.json --save_freq 30000 --model model.hi-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 64 --token_batch_size 4096 --valid_source_dataset `validation_hindi` --valid_target_dataset `validation_english` --valid_batch_size 64 --valid_token_batch_size 4096
 
 ```
 2. For the Sn-En NMT : 
 
 Following command was used for training purpose :
 ```
-CUDA_VISIBLE_DEVICES=0 python nematus/train.py --source_dataset data/en-sa.sa.train --target_dataset data/en-sa.en.train --dictionaries data/hindi/train.hi-en.hi.json data/hindi/train.hi-en.en.json --save_freq 20000 --model model.sa-enge --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 200 --batch_size 32 --token_batch_size 2048 --valid_source_dataset data/en-sa.sa.valid --valid_target_dataset data/en-sa.en.valid --valid_freq 5000 --valid_batch_size 32 --valid_token_batch_size 2048 --reload ./Pretrained_Model/model.hi-eng-80000
+CUDA_VISIBLE_DEVICES=0 python nematus/train.py --source_dataset data/en-sa.sa.train --target_dataset data/en-sa.en.train --dictionaries data/train_hindi.json data/train_english.json --save_freq 20000 --model model.sa-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 200 --batch_size 32 --token_batch_size 2048 --valid_source_dataset data/en-sa.sa.valid --valid_target_dataset data/en-sa.en.valid --valid_freq 5000 --valid_batch_size 32 --valid_token_batch_size 2048 --reload ./model.hi-en-80000
+
+--reload : location of hi-en model
 ```
 
 ###### Translation Results
