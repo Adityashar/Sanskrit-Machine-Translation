@@ -78,12 +78,12 @@ perl ./data/tokenizer.perl -l en < ./data/Sanskrit-English/englishdatasupervised
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
 ```
 Sanskrit :
-subword-nmt learn-bpe -s 4000 < {train_file} > {codes_file}
-subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
+subword-nmt learn-bpe -s 4000 < ./data/Sanskrit-English/en-sa.sa.all > ./data/Sanskrit-English/en-sa.sa.codes
+subword-nmt apply-bpe -c ./data/Sanskrit-English/en-sa.sa.codes < ./data/Sanskrit-English/en-sa.sa.all > ./data/Sanskrit-English/en-sa.sa.bped
 
 English :
-subword-nmt learn-bpe -s 2000 < {train_file} > {codes_file}
-subword-nmt apply-bpe -c {codes_file} < {test_file} > {out_file}
+subword-nmt learn-bpe -s 2000 < ./data/Sanskrit-English/en-sa.en.all > ./data/Sanskrit-English/en-sa.en.codes
+subword-nmt apply-bpe -c ./data/Sanskrit-English/en-sa.en.codes < ./data/Sanskrit-English/en-sa.en.all > ./data/Sanskrit-English/en-sa.en.bped
 
 Use the following files to split data into train, test and valid :
 
