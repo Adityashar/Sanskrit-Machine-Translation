@@ -1,11 +1,11 @@
 #from cltk.tokenize.sentence import TokenizeSentence as TS
 import re
-from indicnlp.tokenize import indic_tokenize  
+#from indicnlp.tokenize import indic_tokenize  
 
 
 #tokenizer = TS('sanskrit')
 
-location = "OpenSubtitles.en-sa.sa"
+location = "./data/Sanskrit-English/en-sa.sa.bped"
 
 req = open(location, 'r', encoding="utf-8").read()
 
@@ -34,9 +34,9 @@ for i in range(len(non_empty_lines)):
     article = re.sub('[0-9]', '', article)
     article = article.lstrip()
     #print(type(article))	
-    tok_line = indic_tokenize.trivial_tokenize(article)
-    string = ' '.join(tok_line)	
-    list1.append(string)
+   # tok_line = indic_tokenize.trivial_tokenize(article)
+    #string = ' '.join(tok_line)	
+    list1.append(article)
     
 
 tokenized_data = list1
@@ -61,4 +61,4 @@ def write(file, data):
 write("en-sa.sa.train", train)
 write("en-sa.sa.valid", valid)
 write("en-sa.sa.test", test)
-write("en-sa.sa.all", tokenized_data)
+#write("en-sa.sa.all", tokenized_data)
