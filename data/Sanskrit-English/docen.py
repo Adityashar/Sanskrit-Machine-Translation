@@ -43,7 +43,7 @@ def write(file, data):
         for item in data:
             f.write("%s\n" % item)
 
-write("en-sa.en.train", train)
-write("en-sa.en.valid", valid)
-write("en-sa.en.test", test)
+write("data/en-sa.en.train", train)
+write("data/en-sa.en.valid", valid)
+write("data/en-sa.en.test", test)
 #write("en-sa.en.all", list1)
