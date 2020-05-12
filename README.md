@@ -51,19 +51,25 @@ We used the IIT Bombay English-Hindi Corpus consisting of 1.56M parallel lines. 
 ```
 Hindi :
 python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/hi.txt ./data/en-hi.hi.all hi
+Output File : /data/en-hi.hi.all 
 
 English :
 perl ./data/tokenizer.perl -l en < ./data/en.txt > ./data/en-hi.en.all
+Output File : /data/en-hi.en.all 
 ```
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
 ```
 Hindi :
-subword-nmt learn-bpe -s 16000 < ./data/en-hi.hi.all > ./data/hindi_codes
+subword-nmt learn-bpe -s 16000 < ./data/en-hi.hi.all > ./data/hindi_codes    
+// hindi_codes file created in the data folder.
 subword-nmt apply-bpe -c ./data/hindi_codes < ./data/en-hi.hi.all > ./data/train.hi-en.hi
+// train.hi-en.hi file created in the data folder.
 
 English :
 subword-nmt learn-bpe -s 16000 < ./data/en-hi.en.all > ./data/eng_codes
+// eng_codes file created in the data folder.
 subword-nmt apply-bpe -c ./data/eng_codes < ./data/en-hi.en.all > ./data/train.hi-en.en
+// train.hi-en.en file created in the data folder.
 ```
 
 #### 2. For Sanskrit-English NMT Model - 
@@ -71,24 +77,32 @@ We used the Sa-en corpus consisting of 6K parallel lines. The data was tokenized
 ```
 Sanskrit :
 python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/Sanskrit-English/sanskritdatasupervised.txt ./data/Sanskrit-English/en-sa.sa.all sa
+// en-sa.sa.all file created in the data folder.
 
 English :
 perl ./data/tokenizer.perl -l en < ./data/Sanskrit-English/englishdatasupervised.txt > ./data/Sanskrit-English/en-sa.en.all
+// en-sa.en.all file created in the data folder.
 ```
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
 ```
 Sanskrit :
 subword-nmt learn-bpe -s 4000 < ./data/Sanskrit-English/en-sa.sa.all > ./data/Sanskrit-English/en-sa.sa.codes
+// en-sa.sa.codes file created in the data folder.
 subword-nmt apply-bpe -c ./data/Sanskrit-English/en-sa.sa.codes < ./data/Sanskrit-English/en-sa.sa.all > ./data/Sanskrit-English/en-sa.sa.bped
+// en-sa.sa.bped file created in the data folder.
 
 English :
 subword-nmt learn-bpe -s 2000 < ./data/Sanskrit-English/en-sa.en.all > ./data/Sanskrit-English/en-sa.en.codes
+// en-sa.en.codes file created in the data folder.
 subword-nmt apply-bpe -c ./data/Sanskrit-English/en-sa.en.codes < ./data/Sanskrit-English/en-sa.en.all > ./data/Sanskrit-English/en-sa.en.bped
+// en-sa.en.bped file created in the data folder.
 
 Use the following files to split data into train, test and valid :
 
 python data/Sanskrit-English/docen.py
+// train.en-sa.en, valid.en-sa.en, test.en-sa.en file created in the data folder.
 python data/Sanskrit-English/docsn.py
+// train.en-sa.sa, valid.en-sa.sa, test.en-sa.sa file created in the data folder.
 ```
 
 ### Training : 
@@ -99,12 +113,17 @@ Firstly concatenated Sn-En and Hi-En parallel data were used to generate diction
 
 ```
 cat ./data/train.hi-en.hi ./data/Sanskrit-English/en-sa.sa.bped > ./data/train_hindi
+// train_hindi file created in the data folder.
+
 cat ./data/train.hi-en.en ./data/Sanskrit-English/en-sa.en.bped > ./data/train_english 
+// train_english file created in the data folder.
 
 python data/build_dictionary.py ./data/train_hindi ./data/train_english
+// train_english.json, train_hindi.json  file created in the data folder.
+
 ```
 
-Following command was used for training purpose : 
+Following command was used for training purpose, we trained it for 80000 iterations :  
 ```
 python nematus/train.py --source_dataset data/train_hindi --target_dataset data/train_english --dictionaries data/train_hindi.json data/train_english.json --save_freq 30000 --model model.hi-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 64 --token_batch_size 4096 --valid_source_dataset data/valid.hi-en.hi --valid_target_dataset data/valid.hi-en.en --valid_batch_size 64 --valid_token_batch_size 4096
 
