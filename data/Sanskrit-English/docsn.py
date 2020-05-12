@@ -58,7 +58,7 @@ def write(file, data):
         for item in data:
             f.write("%s\n" % item)
 
-write("en-sa.sa.train", train)
-write("en-sa.sa.valid", valid)
-write("en-sa.sa.test", test)
+write("data/en-sa.sa.train", train)
+write("data/en-sa.sa.valid", valid)
+write("data/en-sa.sa.test", test)
 #write("en-sa.sa.all", tokenized_data)
