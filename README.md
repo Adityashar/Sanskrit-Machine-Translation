@@ -70,10 +70,10 @@ subword-nmt apply-bpe -c ./data/eng_codes < ./data/en-hi.en.all > ./data/train.h
 We used the Sa-en corpus consisting of 6K parallel lines. The data was tokenized using the IndicNLP tokenizer for Sanskrit and Moses tokenizer for English.
 ```
 Sanskrit :
-python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/Sanskrit-English/englishdatasupervised.txt ./data/Sanskrit-English/en-sa.sa.all sa
+python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/Sanskrit-English/sanskritdatasupervised.txt ./data/Sanskrit-English/en-sa.sa.all sa
 
 English :
-./data/tokenizer.perl -l en < ./data/Sanskrit-English/englishdatasupervised.txt > ./data/Sanskrit-English/en-sa.en.all
+perl ./data/tokenizer.perl -l en < ./data/Sanskrit-English/englishdatasupervised.txt > ./data/Sanskrit-English/en-sa.en.all
 ```
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
 ```
