@@ -61,14 +61,20 @@ The Tokenized data is used for training procedure after applying Byte-pair Encod
 ```
 Hindi :
 subword-nmt learn-bpe -s 16000 < ./data/en-hi.hi.all > ./data/hindi_codes    
+
 // hindi_codes file created in the data folder.
+
 subword-nmt apply-bpe -c ./data/hindi_codes < ./data/en-hi.hi.all > ./data/train.hi-en.hi
+
 // train.hi-en.hi file created in the data folder.
 
 English :
 subword-nmt learn-bpe -s 16000 < ./data/en-hi.en.all > ./data/eng_codes
+
 // eng_codes file created in the data folder.
+
 subword-nmt apply-bpe -c ./data/eng_codes < ./data/en-hi.en.all > ./data/train.hi-en.en
+
 // train.hi-en.en file created in the data folder.
 ```
 
@@ -77,31 +83,42 @@ We used the Sa-en corpus consisting of 6K parallel lines. The data was tokenized
 ```
 Sanskrit :
 python ./IndicNLP/indicnlp/tokenize/indic_tokenize.py ./data/Sanskrit-English/sanskritdatasupervised.txt ./data/Sanskrit-English/en-sa.sa.all sa
+
 // en-sa.sa.all file created in the data folder.
 
 English :
 perl ./data/tokenizer.perl -l en < ./data/Sanskrit-English/englishdatasupervised.txt > ./data/Sanskrit-English/en-sa.en.all
+
 // en-sa.en.all file created in the data folder.
 ```
 The Tokenized data is used for training procedure after applying Byte-pair Encoding using Subword-nmt. 
 ```
 Sanskrit :
 subword-nmt learn-bpe -s 4000 < ./data/Sanskrit-English/en-sa.sa.all > ./data/Sanskrit-English/en-sa.sa.codes
+
 // en-sa.sa.codes file created in the data folder.
+
 subword-nmt apply-bpe -c ./data/Sanskrit-English/en-sa.sa.codes < ./data/Sanskrit-English/en-sa.sa.all > ./data/Sanskrit-English/en-sa.sa.bped
+
 // en-sa.sa.bped file created in the data folder.
 
 English :
 subword-nmt learn-bpe -s 2000 < ./data/Sanskrit-English/en-sa.en.all > ./data/Sanskrit-English/en-sa.en.codes
+
 // en-sa.en.codes file created in the data folder.
+
 subword-nmt apply-bpe -c ./data/Sanskrit-English/en-sa.en.codes < ./data/Sanskrit-English/en-sa.en.all > ./data/Sanskrit-English/en-sa.en.bped
+
 // en-sa.en.bped file created in the data folder.
 
 Use the following files to split data into train, test and valid :
 
 python data/Sanskrit-English/docen.py
+
 // train.en-sa.en, valid.en-sa.en, test.en-sa.en file created in the data folder.
+
 python data/Sanskrit-English/docsn.py
+
 // train.en-sa.sa, valid.en-sa.sa, test.en-sa.sa file created in the data folder.
 ```
 
@@ -113,12 +130,15 @@ Firstly concatenated Sn-En and Hi-En parallel data were used to generate diction
 
 ```
 cat ./data/train.hi-en.hi ./data/Sanskrit-English/en-sa.sa.bped > ./data/train_hindi
+
 // train_hindi file created in the data folder.
 
 cat ./data/train.hi-en.en ./data/Sanskrit-English/en-sa.en.bped > ./data/train_english 
+
 // train_english file created in the data folder.
 
 python data/build_dictionary.py ./data/train_hindi ./data/train_english
+
 // train_english.json, train_hindi.json  file created in the data folder.
 
 ```
