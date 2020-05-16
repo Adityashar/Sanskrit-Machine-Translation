@@ -145,7 +145,7 @@ python data/build_dictionary.py ./data/train_hindi ./data/train_english
 
 Following command was used for training purpose, we trained it for 80000 iterations :  
 ```
-python nematus/train.py --source_dataset data/train_hindi --target_dataset data/train_english --dictionaries data/train_hindi.json data/train_english.json --save_freq 30000 --model model.hi-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 64 --token_batch_size 4096 --valid_source_dataset data/valid.hi-en.hi --valid_target_dataset data/valid.hi-en.en --valid_batch_size 64 --valid_token_batch_size 4096
+python nematus/train.py --source_dataset data/train_hindi --target_dataset data/train_english --dictionaries data/train_hindi.json data/train_english.json --save_freq 30000 --model model.hi-en --model_type transformer --embedding_size 128 --state_size 128 --tie_decoder_embeddings --loss_function per-token-cross-entropy --label_smoothing 0.1 --exponential_smoothing 0.0001 --optimizer adam --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-09 --learning_schedule transformer --maxlen 100 --batch_size 16 --token_batch_size 4096 --valid_source_dataset data/valid.hi-en.hi --valid_target_dataset data/valid.hi-en.en --valid_batch_size 16 --valid_token_batch_size 4096
 
 ```
 2. For the Sn-En NMT : 
