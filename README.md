@@ -160,8 +160,7 @@ CUDA_VISIBLE_DEVICES=0 python nematus/train.py --source_dataset data/en-sa.sa.tr
 ###### Translation Results
 Translation results are available in translation_results folder for all input data. Please use the below command to translate new       Sanskrit phrase to English phrase. We are assuming you have a text file placed in data folder as data_test.txt.
 ```
-cd nematus
-python translate.py -b 32 -v --k 12 --i ./data/en-sa.sa.test --o ./data/en-out --m ./Pretrained_Model/model.sa-enge-106500
+python nematus/translate.py -b 32 -v -k 12 -i ./data/en-sa.sa.test -o ./data/en-out -m ./Pretrained_Model/model.sa-enge-106500
 ```
 Here specify the Source File location, Target file location, Pretrained Model location and the Output/ Prediction File Location.
 
